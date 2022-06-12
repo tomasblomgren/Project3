@@ -11,38 +11,39 @@ def get_world_list():
 
 
 def get_valid_word():
-    word = random.choice(words_list)
-    while '-' in words_list or ' ' in words_list:
-        word = random.choice(words_list)
+    word = random.choice(get_world_list())
+    while '-' in get_world_list() or ' ' in get_world_list():
+        word = random.choice(get_world_list())
 
     return word
 
 
 def hangman(words_list):
     word = get_valid_word()
+
     word_letter = set(word)  # letter in the word
     alphabet = set(string.ascii_uppercase)
     used_letters = set()  # what the user has guessed
     word_letters = ''
 
     lives = 6
+    guessed_letters = []
 
     # getting user input
     while len(word_letters) > 0 and lives > 0:
         # letters used
-        print('You have', lives, 'lives left and you have used these letters: ', ' '
-              .join(used_letters))
+        print(lives, 'lives left. these letters: ', ' ' .join(guessed_letters))
 
         # what current word is (ie W-R D)
-        word_list = [letter if letter in used_letters else '-'
+        word_list = [letter if letter in guessed_letters else '-'
                      for letter in words_list]
         print('Current word: ', ''.join(word_list))
 
         user_letter = input('Guess a letter: ').upper()
-        if used_letter in alphabet - used_letters:
-            used_letters.add(used_letter)
+        if guessed_letters in alphabet - guessed_letters:
+            used_letters.add(guessed_letters)
             if used_letters in word_letters:
-                word_letter.remove(used_letter)
+                word_letter.remove(guessed_letters)
 
             else:
                 lives = lives - 1  # takes away a life if wrong
