@@ -5,21 +5,25 @@ import random
 import string
 import requests
 
+WORDLIST = []
+
 
 def get_world_list():
-    return requests.get("https://random-word-api.herokuapp.com/all").json()
+    global WORDLIST
+    WORDLIST = requests.get("https://random-word-api.herokuapp.com/all").json()
 
 
-def get_valid_word():
-    word = random.choice(get_world_list())
-    while '-' in get_world_list() or ' ' in get_world_list():
-        word = random.choice(get_world_list())
+def get_random_word():
+    global WORDLIST
+    word = random.choice(WORDLIST)
+    while '-' in WORDLIST or ' ' in WORDLIST:
+        word = random.choice(WORDLIST)
 
     return word
 
 
 def hangman(words_list):
-    word = get_valid_word()
+    word = get_random_word()
 
     word_letter = set(word)  # letter in the word
     alphabet = set(string.ascii_uppercase)
@@ -68,6 +72,8 @@ def main():
     # print(user_input)
     words_list = get_world_list()
     hangman(words_list)
+
+    return(words_list)
 
 
 if __name__ == '__main__':
