@@ -1,3 +1,6 @@
+import random
+
+
 def get_hangman_stage(lives):
     """
     Adding stages in combination with lives

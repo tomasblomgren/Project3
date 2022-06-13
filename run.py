@@ -5,6 +5,7 @@ import random
 import string
 import requests
 
+
 WORDLIST = []
 
 
@@ -18,7 +19,7 @@ def get_world_list():
 
 def get_random_word():
     """
-    Taking a word from the 
+    Taking a word from the
     get_world_ list function and randomizing the outcome.
     While loop for excluding - and empty spaces and returning the variable word
     """
@@ -36,7 +37,7 @@ def hangman(words_list):
     """
     word = random.choice(WORDLIST)
     word_letter = set(word)  # letter in the word
-    alphabet = set(string.ascii_uppercase)
+    alphabet = set(string)
     used_letters = set()  # what the user has guessed
     word_letters = ''
 
@@ -76,9 +77,9 @@ def hangman(words_list):
 
 
 def main():
-    """something
+    """ Printing the word from API
     """
-    user_input = input('write something')
+    user_input = input('Write a letter!')
     print(user_input)
     words_list = get_world_list
     hangman(words_list)
@@ -93,10 +94,15 @@ word = get_random_word()
 
 
 def select_word(word):
+    """
+    Finding the word
+    """
     return random.choice(word)
 
 
 def print_secret_word(secret_word):
+    """Printing the secret word to guess
+    """
     print(" _ " * len(secret_word))
 
 
