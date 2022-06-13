@@ -5,6 +5,8 @@ import random
 import string
 import requests
 
+WORDLIST = []
+
 
 def get_world_list():
     """
@@ -16,8 +18,9 @@ def get_world_list():
 
 def get_random_word():
     """
-    Taking a word from the get_world_ list function and randomizing the outcome.
-    While loop for excluding - and empty spaces and returning said word
+    Taking a word from the 
+    get_world_ list function and randomizing the outcome.
+    While loop for excluding - and empty spaces and returning the variable word
     """
     global WORDLIST
     word = random.choice(WORDLIST)
@@ -31,8 +34,7 @@ def hangman(words_list):
     """
     Generating messages and displaying the already guessed letters
     """
-    word = get_random_word()
-
+    word = random.choice(WORDLIST)
     word_letter = set(word)  # letter in the word
     alphabet = set(string.ascii_uppercase)
     used_letters = set()  # what the user has guessed
@@ -76,17 +78,28 @@ def hangman(words_list):
 def main():
     """something
     """
-    # user_input = input('write something')
-    # print(user_input)
+    user_input = input('write something')
+    print(user_input)
     words_list = get_world_list
     hangman(words_list)
 
-    return words_list
+    return word
 
 
 if __name__ == '__main__':
     main()
 
+word = get_random_word()
+
+
+def select_word(word):
+    return random.choice(word)
+
 
 def print_secret_word(secret_word):
-    print(" - " * len(secret_word))
+    print(" _ " * len(secret_word))
+
+
+print("hello world!")
+secret_word = select_word(word)
+print_secret_word(secret_word)
