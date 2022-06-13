@@ -5,15 +5,20 @@ import random
 import string
 import requests
 
-WORDLIST = []
-
 
 def get_world_list():
+    """
+    Generating a word from the API
+    """
     global WORDLIST
     WORDLIST = requests.get("https://random-word-api.herokuapp.com/all").json()
 
 
 def get_random_word():
+    """
+    Taking a word from the get_world_ list function and randomizing the outcome.
+    While loop for excluding - and empty spaces and returning said word
+    """
     global WORDLIST
     word = random.choice(WORDLIST)
     while '-' in WORDLIST or ' ' in WORDLIST:
@@ -23,6 +28,9 @@ def get_random_word():
 
 
 def hangman(words_list):
+    """
+    Generating messages and displaying the already guessed letters
+    """
     word = get_random_word()
 
     word_letter = set(word)  # letter in the word
@@ -70,11 +78,15 @@ def main():
     """
     # user_input = input('write something')
     # print(user_input)
-    words_list = get_world_list()
+    words_list = get_world_list
     hangman(words_list)
 
-    return(words_list)
+    return words_list
 
 
 if __name__ == '__main__':
     main()
+
+
+def print_secret_word(secret_word):
+    print(" - " * len(secret_word))
