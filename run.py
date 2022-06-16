@@ -2,11 +2,10 @@
 importing an API
 """
 import random
-import string
 import requests
+import sys
 
-
-WORDLIST = []
+WORDLIST = [None]
 
 
 def get_world_list():
@@ -35,9 +34,10 @@ def hangman(words_list):
     """
     Generating messages and displaying the already guessed letters
     """
+    global WORDLIST
     word = random.choice(WORDLIST)
-    word_letter = set(word)  # letter in the word
-    alphabet = set(string)
+    word_letter = list(word)  # letter in the word
+
     used_letters = set()  # what the user has guessed
     word_letters = ''
 
@@ -54,8 +54,8 @@ def hangman(words_list):
                      for letter in words_list]
         print('Current word: ', ''.join(word_list))
 
-        user_letter = input('Guess a letter: ').upper()
-        if guessed_letters in alphabet - guessed_letters:
+        user_letter = input('Guess a letter: ')
+        if guessed_letters in word - guessed_letters:
             used_letters.add(guessed_letters)
             if used_letters in word_letters:
                 word_letter.remove(guessed_letters)
@@ -79,18 +79,15 @@ def hangman(words_list):
 def main():
     """ Printing the word from API
     """
-    user_input = input('Write a letter!')
-    print(user_input)
-    words_list = get_world_list
-    hangman(words_list)
+    user_input = (input, 'Write a letter!:')
+    word = get_random_word
+    hangman(WORDLIST)
 
     return word
 
 
 if __name__ == '__main__':
     main()
-
-word = get_random_word()
 
 
 def select_word(word):
@@ -107,5 +104,91 @@ def print_secret_word(secret_word):
 
 
 print("hello world!")
+word = WORDLIST
 secret_word = select_word(word)
 print_secret_word(secret_word)
+
+
+def get_hangman_stage(lives):
+    """
+    Adding stages in combination with lives
+    as the game progresses you add a stage or you add a letter
+    """
+    max_attempts = 6
+    stages = ["""
+        ------
+        |    |
+        |
+        |
+        |
+        |
+        |
+    ------------
+    """, """
+        ------
+        |    |
+        |    O
+        |
+        |
+        |
+        |
+    ------------
+    """, """
+        ------
+        |    |
+        |    O
+        |    |
+        |    |
+        |
+        |
+    ------------
+    """, """
+        ------
+        |    |
+        |    O
+        |    |
+        |    |
+        |   /
+        |
+    ------------
+    """, """
+        ------
+        |    |
+        |    O
+        |    |
+        |    |
+        |   / \\
+        |
+    ------------
+    """, """
+        ------
+        |    |
+        |    O
+        |  --|
+        |    |
+        |   / \\
+        |
+    ------------
+    """, """
+        ------
+        |    |
+        |    O
+        |  --|--
+        |    |
+        |   / \\
+        |
+    ------------
+    """]
+    return stages[max_attempts - lives]
+
+
+def guess_letter_in_secret_word(guess, secret_word):
+    guess = input("guess a letter!: ")
+    if len(guess) > 1 or not guess.isalpha():
+        print("only single letters are allowed, try again")
+        SystemExit()
+    else:
+        if guess in secret_word:
+            return True
+        else:
+            return False
