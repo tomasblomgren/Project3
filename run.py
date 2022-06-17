@@ -2,9 +2,8 @@
 importing an API
 """
 import random
-import requests
 import sys
-
+import requests
 WORDLIST = [None]
 
 
@@ -12,6 +11,7 @@ def get_world_list():
     """
     Generating a word from the API
     """
+    print('Running get_world_list')
     global WORDLIST
     WORDLIST = requests.get("https://random-word-api.herokuapp.com/all").json()
 
@@ -22,11 +22,12 @@ def get_random_word():
     get_world_ list function and randomizing the outcome.
     While loop for excluding - and empty spaces and returning the variable word
     """
-    global WORDLIST
+    print('Running get_random_word')
+    # global WORDLIST
     word = random.choice(WORDLIST)
     while '-' in WORDLIST or ' ' in WORDLIST:
         word = random.choice(WORDLIST)
-
+        print(word)
     return word
 
 
@@ -36,9 +37,8 @@ def hangman(words_list):
     """
     global WORDLIST
     word = random.choice(WORDLIST)
-    word_letter = list(word)  # letter in the word
-
-    used_letters = set()  # what the user has guessed
+    word_letter = list(WORDLIST)  # letter in the word
+    guessed_letters = list()  # what the user has guessed
     word_letters = ''
 
     lives = 6
@@ -56,15 +56,14 @@ def hangman(words_list):
 
         user_letter = input('Guess a letter: ')
         if guessed_letters in word - guessed_letters:
-            used_letters.add(guessed_letters)
-            if used_letters in word_letters:
+            if guessed_letters in word_letters:
                 word_letter.remove(guessed_letters)
 
             else:
                 lives = lives - 1  # takes away a life if wrong
                 print('Letter is not in the word, try again!')
 
-        elif user_letter in used_letters:
+        elif user_letter in guessed_letters:
             print('you have already used this letter! Please try again')
         else:
             print('invalid character. Please try again')
@@ -182,7 +181,7 @@ def get_hangman_stage(lives):
     return stages[max_attempts - lives]
 
 
-def guess_letter_in_secret_word(guess, secret_word):
+def is_guess_in_secret_word(guess, secret_word):
     guess = input("guess a letter!: ")
     if len(guess) > 1 or not guess.isalpha():
         print("only single letters are allowed, try again")
@@ -192,3 +191,27 @@ def guess_letter_in_secret_word(guess, secret_word):
             return True
         else:
             return False
+
+
+print("Welcome to Hangman Deluxe! guess the word to win the game")
+secret_word = select_word(word)
+lives = 6
+guessed_letters = []
+guess = input("Guess a letter!: ")
+guess_in_secret_word = is_guess_in_secret_word(guess, secret_word)
+
+if guess_in_secret_word:
+    if guess in word:
+        print("you have already guessed that letter{}" .format(guess))
+    else:
+        print("Correct! {} is in the secret word".format(guess))
+        guessed_letters += lives
+else:
+    print("No {} is not part of the word" .format(guess))
+    guessed_letters -= lives
+
+data_str = ("Enter your data here!: ")
+
+print(word)
+
+is_guess_in_secret_word(guess, secret_word)
