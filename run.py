@@ -17,6 +17,9 @@ def get_world_list():
     WORDLIST = requests.get("https://random-word-api.herokuapp.com/all").json()
 
 
+get_world_list()
+
+
 def get_random_word():
     """
     Taking a word from the
