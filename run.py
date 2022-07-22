@@ -2,9 +2,10 @@
 importing an API
 """
 import random
-import sys
 import requests
-WORDLIST = [None]
+WORDLIST = [""]
+word = random.choice(WORDLIST)
+lives = 6
 
 
 def get_world_list():
@@ -76,7 +77,8 @@ def hangman(words_list):
 
 
 def main():
-    """ Printing the word from API
+    """ 
+    Printing the word from API
     """
     user_input = (input, 'Write a letter!:')
     word = get_random_word
@@ -97,15 +99,10 @@ def select_word(word):
 
 
 def print_secret_word(secret_word):
-    """Printing the secret word to guess
     """
-    print(" _ " * len(secret_word))
-
-
-print("hello world!")
-word = WORDLIST
-secret_word = select_word(word)
-print_secret_word(secret_word)
+    Printing the secret word to guess
+    """
+    # print(" _ " * len(secret_word))
 
 
 def get_hangman_stage(lives):
@@ -193,16 +190,17 @@ def is_guess_in_secret_word(guess, secret_word):
             return False
 
 
-print("Welcome to Hangman Deluxe! guess the word to win the game")
+print("Welcome to Hangman Deluxe! guess the word to win the game\n")
 secret_word = select_word(word)
-lives = 6
+
 guessed_letters = []
 guess = input("Guess a letter!: ")
 guess_in_secret_word = is_guess_in_secret_word(guess, secret_word)
 
 if guess_in_secret_word:
     if guess in word:
-        print("you have already guessed that letter{}" .format(guess))
+        print(
+            f"you have already guessed that letter{guessed_letters}" .format(guess))
     else:
         print("Correct! {} is in the secret word".format(guess))
         guessed_letters += lives
@@ -214,4 +212,5 @@ data_str = ("Enter your data here!: ")
 
 print(word)
 
-is_guess_in_secret_word(guess, secret_word)
+
+print(get_hangman_stage(lives))
