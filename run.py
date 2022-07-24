@@ -1,12 +1,13 @@
 """
-importing an API
+importing hangman stages from the hangman file
 """
+from hangman import stage
 import os
 import random
 import time
 
 import requests
-from hangman import stage
+
 
 WORDLIST = []
 
@@ -15,7 +16,7 @@ def get_world_list():
     """
     Generating a word from the API
     """
-    print('Running get_world_list')
+
     global WORDLIST
     WORDLIST = requests.get("https://random-word-api.herokuapp.com/all").json()
 
@@ -24,11 +25,23 @@ def get_random_word():
     """
     Taking a word from the
     get_world_ list function and randomizing the outcome.
-    While loop for excluding - and empty spaces and returning the variable word
+    While loop for excluding - and empty spaces
+    returning the variable word
+    Printing out rules
     """
-    print('Running get_random_word')
+
+    print('The number of - equals to the letters')
+    print('Wrong guesses will take a life')
+    print('When you guess wrong a stage will be added')
+    print('Anything but letters is not a valid input')
+    print('Trying to choose several letters will take a life')
+    print('The letters are generated from an entire dictionary')
+    print('hence the name Hangman Deluxe')
+    print('Good luck!\n')
+
     global WORDLIST
     word = random.choice(WORDLIST)
+
     while '-' in word or ' ' in word:
         word = random.choice(WORDLIST)
         print(word)
@@ -40,7 +53,7 @@ def hangman():
     Generating messages and displaying the already guessed letters
     """
     global WORDLIST
-    chosen_word = 'gamer'  # get_random_word()
+    chosen_word = get_random_word()  # get_random_word()
     word_letters = list(chosen_word)  # letter in the word
     guessed_letters = list()  # what the user has guessed
     lives = 6
@@ -48,7 +61,8 @@ def hangman():
     # getting user input
     while len(word_letters) > 0 and lives > 0:
         # letters used
-        print(lives, 'lives left. these letters: ', ' '.join(guessed_letters))
+        print(lives, 'lives left. these letters have been used: ',
+              ' '.join(guessed_letters))
 
         # what current word is (ie W-R D)
         user_displayable_word = [
@@ -60,7 +74,7 @@ def hangman():
         user_letter = input('Guess a letter: ')
         user_letter = user_letter.lower()
 
-        if user_letter.isnumeric() or user_letter in ['!', '@', '#', '$', '%', '^', '&']:
+        if user_letter.isnumeric() or user_letter in ['!', '@', ]:
             print('invalid character. Please try again')
             continue
 
@@ -70,14 +84,14 @@ def hangman():
 
         if user_letter not in word_letters:
             lives = lives - 1  # takes away a life if wrong
-            print('Sorry, Letter is not present in the word, it cost a life!')
+            print('Sorry, Letter is not in the word, it cost a life!')
 
         if user_letter in word_letters:
             guessed_letters.append(user_letter)
             word_letters.remove(user_letter)
 
         print(stage(lives))
-        time.sleep(2)
+        time.sleep(5)
         os.system('clear')
 
         if guessed_letters == word_letters:
@@ -117,16 +131,16 @@ def is_guess_in_secret_word(guess, secret_word):
 
 
 def main():
-    """ 
+    """
     Printing the word from API
     """
-    # load the word list before commencing the game
+    # loads the word list before commencing the game
     get_world_list()
 
     # get user input
     # user_input = (input, 'Write a letter!:')
     # word = get_random_word()
-    print("Welcome to Hangman Deluxe! guess the word to win the game\n")
+    print("Welcome to Hangman Deluxe! Guess the word to win the game!\n")
     hangman()
 
 
