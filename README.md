@@ -24,15 +24,16 @@ The user will try to guess the secret word before their 6 lives/attempts run out
 
 ## Technologies used
 
-- Python version 3.8.11
+- Python version 3.8.10
 - Heroku.com for deployment
 
 ## Testing
 
 ### PEP 8 validator testing
 
-- PEP8 python validator was used for this project
+- PEP8 python validator was used for this project in both run.py,stages.py and __init__.py
 - There are no errors returned from PEP8 validator!
+
 
 ## Further Testing 
 

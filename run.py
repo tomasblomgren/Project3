@@ -26,17 +26,16 @@ def get_random_word():
     Taking a word from the
     get_world_ list function and randomizing the outcome.
     While loop for excluding - and empty spaces
-    returning the variable word
     Printing out rules
     """
-
+    print('Rules:\n')
     print('The number of - equals to the letters')
     print('Wrong guesses will take a life')
     print('When you guess wrong a stage will be added')
     print('Anything but letters is not a valid input')
     print('Trying to choose several letters will take a life')
-    print('The letters are generated from an entire dictionary')
-    print('hence the name Hangman Deluxe')
+    print('The letters picked will be displayed above the word')
+
     print('Good luck!\n')
 
     global WORDLIST
@@ -53,7 +52,7 @@ def hangman():
     Generating messages and displaying the already guessed letters
     """
     global WORDLIST
-    chosen_word = get_random_word()  # get_random_word()
+    chosen_word = get_random_word()
     word_letters = list(chosen_word)  # letter in the word
     guessed_letters = list()  # what the user has guessed
     lives = 6
@@ -91,7 +90,7 @@ def hangman():
             word_letters.remove(user_letter)
 
         print(stage(lives))
-        time.sleep(5)
+        time.sleep(4)
         os.system('clear')
 
         if guessed_letters == word_letters:
@@ -104,21 +103,10 @@ def hangman():
         print(f'You have guessed the word', {chosen_word}, 'well done!')
 
 
-def select_word(word):
-    """
-    Finding the word
-    """
-    return random.choice(word)
-
-
-def print_secret_word(secret_word):
-    """
-    Printing the secret word to guess
-    """
-    # print(" _ " * len(secret_word))
-
-
 def is_guess_in_secret_word(guess, secret_word):
+    """
+    Creating an if statement to exclude several letters at once
+    """
     guess = input("guess a letter!: ")
     if len(guess) > 1 or not guess.isalpha():
         print("only single letters are allowed, try again")
@@ -137,9 +125,6 @@ def main():
     # loads the word list before commencing the game
     get_world_list()
 
-    # get user input
-    # user_input = (input, 'Write a letter!:')
-    # word = get_random_word()
     print("Welcome to Hangman Deluxe! Guess the word to win the game!\n")
     hangman()
 
